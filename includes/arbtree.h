@@ -1,3 +1,10 @@
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#ifndef _CRT_NONSTDC_NO_DEPRECATE
+#define _CRT_NONSTDC_NO_DEPRECATE
+#endif
+
 #ifndef ARBTREE_H
 #define ARBTREE_H
 
@@ -36,8 +43,8 @@ ARBTREE_API void terminateArbTreeTypeMap(void);
 ARBTREE_API rbtree *initializeArbTree(void);
 ARBTREE_API double *getDecimal(char *key,rbtree *rbt);
 ARBTREE_API cmplx *getComplex(char *key,rbtree *rbt);
-ARBTREE_API long *getInteger(char *key,rbtree *rbt);
-ARBTREE_API long getNull(char *key, rbtree *rbt);
+ARBTREE_API int32_t *getInteger(char *key,rbtree *rbt);
+ARBTREE_API int32_t getNull(char *key, rbtree *rbt);
 ARBTREE_API char *getString(char *key,rbtree *rbt);
 ARBTREE_API MEM_FILE *getByteArray(char *key,rbtree *rbt);
 ARBTREE_API char **getStringArray(char *key,rbtree *rbt);
@@ -49,7 +56,7 @@ ARBTREE_API void writeArbTreeToFile(rbtree *rbt,char *fname);
 ARBTREE_API void writeArbTreeToStream(rbtree *rbt, rbnode *current, void *fbin,
                           stream_type st);
 ARBTREE_API rbtree copyArbTree(rbtree *rbt);
-ARBTREE_API void freeArbTree(rbtree *rbt,rbnode *st,int v);
+ARBTREE_API void freeArbTree(rbtree *rbt,rbnode *st,int32_t v);
 ARBTREE_API rbtree *readArbTreeFromFile(char *fname);
 ARBTREE_API rbtree *readArbTreeFromStream(void *f, stream_type st);
 ARBTREE_API void registerType(char *name, void(*freeVal)(void *),

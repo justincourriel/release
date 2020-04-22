@@ -1,3 +1,10 @@
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#ifndef _CRT_NONSTDC_NO_DEPRECATE
+#define _CRT_NONSTDC_NO_DEPRECATE
+#endif
+
 #ifndef ARBEVAL8_H
 #define ARBEVAL8_H
 
@@ -24,19 +31,19 @@ extern void *arbeval_globals;
 
 ARBEVAL_API char *GetLocalPath();
 ARBEVAL_API char *GetLocalOutPath();
-ARBEVAL_API void SetPlatformCode(long platcode);
+ARBEVAL_API void SetPlatformCode(int32_t platcode);
 ARBEVAL_API void SetLocalPath(char *lpath);
 ARBEVAL_API void SetLocalOutPath(char *lpath);
 ARBEVAL_API void SetPlatformName(char *lpath);
-ARBEVAL_API void SetInstructions(char *init,long isFile);
-ARBEVAL_API void SetGraphingInstructions(char *init,long isFile);
-ARBEVAL_API void SetFourierInstructions(char *init,long isFile);
-ARBEVAL_API void SetProgrammingInstructions(char *init,long isFile);
-ARBEVAL_API void SetInitScript(char *init,long isFile);
+ARBEVAL_API void SetInstructions(char *init,int32_t isFile);
+ARBEVAL_API void SetGraphingInstructions(char *init,int32_t isFile);
+ARBEVAL_API void SetFourierInstructions(char *init,int32_t isFile);
+ARBEVAL_API void SetProgrammingInstructions(char *init,int32_t isFile);
+ARBEVAL_API void SetInitScript(char *init,int32_t isFile);
 ARBEVAL_API char *ConstructReadObjectAssignmentFromFile(char *fname_s);
-ARBEVAL_API void AddArbevalEnvironment(arbenv *state, arbenv *ae, int overwrite);
+ARBEVAL_API void AddArbevalEnvironment(arbenv *state, arbenv *ae, int32_t overwrite);
 ARBEVAL_API char *ArbevalHistoryToString(arbenv *ae);
-ARBEVAL_API void ClearArbevalHistoryEntry(arbenv *ae, long eind);
+ARBEVAL_API void ClearArbevalHistoryEntry(arbenv *ae, int32_t eind);
 ARBEVAL_API void ClearArbevalHistory(arbenv *ae);
 ARBEVAL_API void WriteArbevalSettingsHeader(FILE *ff, char *hname, double version);
 ARBEVAL_API void WriteArbevalSettingsHeaderToStream(void *ff, char *hname, double version,
@@ -44,31 +51,32 @@ ARBEVAL_API void WriteArbevalSettingsHeaderToStream(void *ff, char *hname, doubl
 ARBEVAL_API rbtree *LoadFontFromStream(MEM_FILE *file);
 ARBEVAL_API void AppendHistoryItem(arbenv *ae, char *in, char *out);
 ARBEVAL_API void SetLastHistoryItemOutput(arbenv *ae, char *out);
-ARBEVAL_API unsigned char *DummyBitmap(int cols, int rows);
+ARBEVAL_API unsigned char *DummyBitmap(int32_t cols, int32_t rows);
 ARBEVAL_API uint32_t **LoadBitmapToRGBMatrix(char *fname);
-ARBEVAL_API  uint32_t **DownSampleRGBMatrix(uint32_t **rgbmat, long dsfact);
-ARBEVAL_API void RemoveHistoryItem(arbenv *ae, long indx);
+ARBEVAL_API  uint32_t **DownSampleRGBMatrix(uint32_t **rgbmat, int32_t dsfact);
+ARBEVAL_API void RemoveHistoryItem(arbenv *ae, int32_t indx);
 ARBEVAL_API char SetUpdateHistoryFlag(arbenv *ae, char val);
 ARBEVAL_API size_t ArbenvSize();
-ARBEVAL_API long AtoL(char *nums);
+ARBEVAL_API int32_t AtoL(char *nums);
 ARBEVAL_API double AtoF(char *nums);
-ARBEVAL_API long TestNumericalString(char *, double *val);
+ARBEVAL_API int32_t TestNumericalString(char *, double *val);
+int32_t TestBinaryNumberString(char* binstr1, double* num);
 ARBEVAL_API void FreeVariable(void *val);
 ARBEVAL_API char **GetPredefinedFunctionInfo(char *flabel);
 ARBEVAL_API char **GetEnvironmentFunctionInfo(char *flabel);
 ARBEVAL_API char **GetProgrammingCommandInfo(char *flabel);
-ARBEVAL_API arbenv *InitializeTopLevelArbevalEnvironment(long defaults);
+ARBEVAL_API arbenv *InitializeTopLevelArbevalEnvironment(int32_t defaults);
 ARBEVAL_API void TerminateArbevalEnvironment(arbenv *ae);
 ARBEVAL_API void *copyArbenv(void *v);
 ARBEVAL_API void freeArbenv(void *ae);
 ARBEVAL_API void writeArbenv(void *v, void *f, stream_type st);
-ARBEVAL_API char *FormatRBST(char **sin, long expand, long sd, char * prevnum, char * prevdenom, arbenv *ae);
+ARBEVAL_API char *FormatRBST(char **sin, int32_t expand, int32_t sd, char * prevnum, char * prevdenom, arbenv *ae);
 ARBEVAL_API void *readTopArbenv(void *f, stream_type st);
-ARBEVAL_API char *ArbevalScript(char *script1, arbenv *ae, long delete_literal_objects);
-ARBEVAL_API char *RestoreDefaultAssignments(arbenv *ae, long delete_lits);
-ARBEVAL_API char *PrintEnvironment(arbenv *ae, long indent, long print_gen);
+ARBEVAL_API char *ArbevalScript(char *script1, arbenv *ae, int32_t delete_literal_objects);
+ARBEVAL_API char *RestoreDefaultAssignments(arbenv *ae, int32_t delete_lits);
+ARBEVAL_API char *PrintTopLevelEnvironment(arbenv *ae, int32_t indent, int32_t print_gen);
 ARBEVAL_API void TerminateArbevalGlobals(void);
-ARBEVAL_API void InitializeArbevalGlobals(char *init, long init_is_file);
+ARBEVAL_API void InitializeArbevalGlobals(char *init, int32_t init_is_file);
 ARBEVAL_API void ReinitializeHistory(arbenv *ae);
 ARBEVAL_API void HistoryIteratorSeekEnd(arbenv *ae);
 ARBEVAL_API dl_list *GetHistory(arbenv *ae);
@@ -79,21 +87,21 @@ ARBEVAL_API char *InstructionsGraphing(void);
 ARBEVAL_API char *InstructionsProgramming(void);
 ARBEVAL_API char *InstructionsFourier(void);
 ARBEVAL_API char *About(void);
-ARBEVAL_API long GetSignificantDigits(arbenv *ae);
-ARBEVAL_API long GetCancelFlag(arbenv *ae);
-ARBEVAL_API void SetSignificantDigits(arbenv *ae, long nsig );
+ARBEVAL_API int32_t GetSignificantDigits(arbenv *ae);
+ARBEVAL_API int32_t GetCancelFlag(arbenv *ae);
+ARBEVAL_API void SetSignificantDigits(arbenv *ae, int32_t nsig );
 ARBEVAL_API void SetCancelFlag(arbenv *ae, char val);
 ARBEVAL_API arbenv *CopyArbevalEnvironment(arbenv *source, arbenv *outer,
-  long cpyhist, long ischild);
-ARBEVAL_API void SetSeed(arbenv *ae, long val);
+  int32_t cpyhist, int32_t ischild);
+ARBEVAL_API void SetSeed(arbenv *ae, int32_t val);
 ARBEVAL_API char *ReadFileToString(char *path);
 ARBEVAL_API double GetArbevalVersion();
 ARBEVAL_API char **GetPredefinedFunctionLabels();
 ARBEVAL_API char **GetEnvironmentFunctionLabels();
 ARBEVAL_API char **GetProgrammingCommandLabels();
-ARBEVAL_API long GetProgrammingCommandListSize();
-ARBEVAL_API long GetPredefinedFunctionListSize();
-ARBEVAL_API long GetEnvironmentFunctionListSize();
+ARBEVAL_API int32_t GetProgrammingCommandListSize();
+ARBEVAL_API int32_t GetPredefinedFunctionListSize();
+ARBEVAL_API int32_t GetEnvironmentFunctionListSize();
 ARBEVAL_API char *GetPlatformName();
 
 
@@ -102,11 +110,11 @@ ARBEVAL_API unsigned char **GeneratePlotBitmaps(char *expr, double xmin, double 
   uint32_t dimx, uint32_t dimy, rbtree *font,
   arbenv *ae);
 ARBEVAL_API unsigned char *GenerateParametricPlotBitmap(char *expr11, double tmin,
-  double tmax, long nt, cmplx ymin,
+  double tmax, int32_t nt, cmplx ymin,
   cmplx ymax, uint32_t dimx,
   uint32_t dimy, rbtree *font,
   arbenv *ae);
-ARBEVAL_API unsigned char **GenerateFourierPlotBitmaps(char *expr11, double xmin, double xmax, long pow2,
+ARBEVAL_API unsigned char **GenerateFourierPlotBitmaps(char *expr11, double xmin, double xmax, int32_t pow2,
   cmplx yminsig, cmplx ymaxsig, cmplx yminspec, cmplx ymaxspec,
   uint32_t dimx, uint32_t dimy,
   double ***ft, char **dnames,

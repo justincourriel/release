@@ -27,6 +27,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <stdint.h>
 
 /* Indicates that d_type field is available in dirent structure */
 #define _DIRENT_HAVE_D_TYPE
@@ -212,10 +213,10 @@ extern "C" {
 /* Wide-character version */
 struct _wdirent {
     /* Always zero */
-    long d_ino;
+    int32_t d_ino;
 
     /* File position within stream */
-    long d_off;
+    int32_t d_off;
 
     /* Structure size */
     unsigned short d_reclen;
@@ -224,7 +225,7 @@ struct _wdirent {
     size_t d_namlen;
 
     /* File type */
-    int d_type;
+    int32_t d_type;
 
     /* File name */
     wchar_t d_name[PATH_MAX+1];
@@ -239,7 +240,7 @@ struct _WDIR {
     WIN32_FIND_DATAW data;
 
     /* True if data is valid */
-    int cached;
+    int32_t cached;
 
     /* Win32 search handle */
     HANDLE handle;
@@ -252,10 +253,10 @@ typedef struct _WDIR _WDIR;
 /* Multi-byte character version */
 struct dirent {
     /* Always zero */
-    long d_ino;
+    int32_t d_ino;
 
     /* File position within stream */
-    long d_off;
+    int32_t d_off;
 
     /* Structure size */
     unsigned short d_reclen;
@@ -264,7 +265,7 @@ struct dirent {
     size_t d_namlen;
 
     /* File type */
-    int d_type;
+    int32_t d_type;
 
     /* File name */
     char d_name[PATH_MAX+1];
@@ -285,24 +286,24 @@ static _WDIR *_wopendir (const wchar_t *dirname);
 static struct dirent *readdir (DIR *dirp);
 static struct _wdirent *_wreaddir (_WDIR *dirp);
 
-static int readdir_r(
+static int32_t readdir_r(
     DIR *dirp, struct dirent *entry, struct dirent **result);
-static int _wreaddir_r(
+static int32_t _wreaddir_r(
     _WDIR *dirp, struct _wdirent *entry, struct _wdirent **result);
 
-static int closedir (DIR *dirp);
-static int _wclosedir (_WDIR *dirp);
+static int32_t closedir (DIR *dirp);
+static int32_t _wclosedir (_WDIR *dirp);
 
 static void rewinddir (DIR* dirp);
 static void _wrewinddir (_WDIR* dirp);
 
-static int scandir (const char *dirname, struct dirent ***namelist,
-    int (*filter)(const struct dirent*),
-    int (*compare)(const void *, const void *));
+static int32_t scandir (const char *dirname, struct dirent ***namelist,
+    int32_t (*filter)(const struct dirent*),
+    int32_t (*compare)(const void *, const void *));
 
-static int alphasort (const struct dirent **a, const struct dirent **b);
+static int32_t alphasort (const struct dirent **a, const struct dirent **b);
 
-static int versionsort (const struct dirent **a, const struct dirent **b);
+static int32_t versionsort (const struct dirent **a, const struct dirent **b);
 
 
 /* For compatibility with Symbian */
@@ -318,21 +319,21 @@ static int versionsort (const struct dirent **a, const struct dirent **b);
 static WIN32_FIND_DATAW *dirent_first (_WDIR *dirp);
 static WIN32_FIND_DATAW *dirent_next (_WDIR *dirp);
 
-static int dirent_mbstowcs_s(
+static int32_t dirent_mbstowcs_s(
     size_t *pReturnValue,
     wchar_t *wcstr,
     size_t sizeInWords,
     const char *mbstr,
     size_t count);
 
-static int dirent_wcstombs_s(
+static int32_t dirent_wcstombs_s(
     size_t *pReturnValue,
     char *mbstr,
     size_t sizeInBytes,
     const wchar_t *wcstr,
     size_t count);
 
-static void dirent_set_errno (int error);
+static void dirent_set_errno (int32_t error);
 
 
 /*
@@ -345,7 +346,7 @@ _wopendir(
     const wchar_t *dirname)
 {
     _WDIR *dirp = NULL;
-    int error;
+    int32_t error;
 
     /* Must have directory name */
     if (dirname == NULL  ||  dirname[0] == '\0') {
@@ -476,7 +477,7 @@ _wreaddir(
  * Returns zero on success.  If end of directory stream is reached, then sets
  * result to NULL and returns zero.
  */
-static int
+static int32_t
 _wreaddir_r(
     _WDIR *dirp,
     struct _wdirent *entry,
@@ -492,7 +493,7 @@ _wreaddir_r(
 
         /*
          * Copy file name as wide-character string.  If the file name is too
-         * long to fit in to the destination buffer, then truncate file name
+         * int32_t to fit in to the destination buffer, then truncate file name
          * to PATH_MAX characters and zero-terminate the buffer.
          */
         n = 0;
@@ -538,11 +539,11 @@ _wreaddir_r(
  * DIR structure as well as any directory entry read previously by
  * _wreaddir().
  */
-static int
+static int32_t
 _wclosedir(
     _WDIR *dirp)
 {
-    int ok;
+    int32_t ok;
     if (dirp) {
 
         /* Release search handle */
@@ -666,7 +667,7 @@ opendir(
     const char *dirname) 
 {
     struct DIR *dirp;
-    int error;
+    int32_t error;
 
     /* Must have directory name */
     if (dirname == NULL  ||  dirname[0] == '\0') {
@@ -744,7 +745,7 @@ readdir(
  * Returns zero on success.  If the end of directory stream is reached, then
  * sets result to NULL and returns zero.
  */
-static int
+static int32_t
 readdir_r(
     DIR *dirp,
     struct dirent *entry,
@@ -756,7 +757,7 @@ readdir_r(
     datap = dirent_next (dirp->wdirp);
     if (datap) {
         size_t n;
-        int error;
+        int32_t error;
 
         /* Attempt to convert file name to multi-byte string */
         error = dirent_wcstombs_s(
@@ -833,11 +834,11 @@ readdir_r(
 /*
  * Close directory stream.
  */
-static int
+static int32_t
 closedir(
     DIR *dirp)
 {
-    int ok;
+    int32_t ok;
     if (dirp) {
 
         /* Close wide-character directory stream */
@@ -871,12 +872,12 @@ rewinddir(
 /*
  * Scan directory for entries.
  */
-static int
+static int32_t
 scandir(
     const char *dirname,
     struct dirent ***namelist,
-    int (*filter)(const struct dirent*),
-    int (*compare)(const void*, const void*))
+    int32_t (*filter)(const struct dirent*),
+    int32_t (*compare)(const void*, const void*))
 {
     struct dirent **files = NULL;
     size_t size = 0;
@@ -886,7 +887,7 @@ scandir(
     struct dirent *entry;
     struct dirent *tmp = NULL;
     size_t i;
-    int result = 0;
+    int32_t result = 0;
 
     /* Open directory stream */
     dir = opendir (dirname);
@@ -938,7 +939,7 @@ scandir(
 
                 /* Did we get an entry? */
                 if (entry != NULL) {
-                    int pass;
+                    int32_t pass;
 
                     /* Determine whether to include the entry in result */
                     if (filter) {
@@ -1009,7 +1010,7 @@ scandir(
 }
 
 /* Alphabetical sorting */
-static int
+static int32_t
 alphasort(
     const struct dirent **a, const struct dirent **b)
 {
@@ -1017,7 +1018,7 @@ alphasort(
 }
 
 /* Sort versions */
-static int
+static int32_t
 versionsort(
     const struct dirent **a, const struct dirent **b)
 {
@@ -1027,7 +1028,7 @@ versionsort(
 
 
 /* Convert multi-byte string to wide character string */
-static int
+static int32_t
 dirent_mbstowcs_s(
     size_t *pReturnValue,
     wchar_t *wcstr,
@@ -1035,7 +1036,7 @@ dirent_mbstowcs_s(
     const char *mbstr,
     size_t count)
 {
-    int error;
+    int32_t error;
 
 #if defined(_MSC_VER)  &&  _MSC_VER >= 1400
 
@@ -1080,7 +1081,7 @@ dirent_mbstowcs_s(
 }
 
 /* Convert wide-character string to multi-byte string */
-static int
+static int32_t
 dirent_wcstombs_s(
     size_t *pReturnValue,
     char *mbstr,
@@ -1088,7 +1089,7 @@ dirent_wcstombs_s(
     const wchar_t *wcstr,
     size_t count)
 {
-    int error;
+    int32_t error;
 
 #if defined(_MSC_VER)  &&  _MSC_VER >= 1400
 
@@ -1135,7 +1136,7 @@ dirent_wcstombs_s(
 /* Set errno variable */
 static void
 dirent_set_errno(
-    int error)
+    int32_t error)
 {
 #if defined(_MSC_VER)  &&  _MSC_VER >= 1400
 

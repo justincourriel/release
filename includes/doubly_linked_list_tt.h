@@ -9,7 +9,7 @@ typedef struct dlnode_tt{
 
   struct dlnode_tt *next;
   struct dlnode_tt *prev;
-  long key;
+  int32_t key;
   void *value;
 }dlnode_tt;
 
@@ -21,18 +21,18 @@ typedef struct dllist_tt{
   void (*free_value)(void *);
   void *(*read_value)(void *,stream_type);
   void (*write_value)(void *,void *,stream_type);
-  long size;
+  int32_t size;
 }dllist_tt;
 
 
-dlnode_tt *dll_initializeNode(long key,void *val);
+dlnode_tt *dll_initializeNode(int32_t key,void *val);
 dllist_tt dll_initialize(void (*freeDLNodeValueNull)(void *),
                          void *(*readDLNodeValue)(void *,stream_type),
                          void (*writeDLNodeValue)(void *,void *,stream_type));
-void dll_insertAfter(dllist_tt *dll, dlnode_tt *node, long key, void *val);
-void dll_insertBefore(dllist_tt *head, dlnode_tt *node, long key, void *val);
-void dll_freeNode(dllist_tt *dll,dlnode_tt *node,int v);
-void dll_free(dllist_tt *root,int v);
+void dll_insertAfter(dllist_tt *dll, dlnode_tt *node, int32_t key, void *val);
+void dll_insertBefore(dllist_tt *head, dlnode_tt *node, int32_t key, void *val);
+void dll_freeNode(dllist_tt *dll,dlnode_tt *node,int32_t v);
+void dll_free(dllist_tt *root,int32_t v);
 dlnode_tt *dll_deleteNode(dllist_tt *dll,dlnode_tt *dln);
 
 #endif
