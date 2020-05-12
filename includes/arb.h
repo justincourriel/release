@@ -42,8 +42,8 @@
 #define IMM1    (IM1-1.0)
 #define IA1     40014
 #define IA2     40692
-#define INFD    HUGE_VAL//1.0E308
-#define INFL    HUGE_VALL//2147483647
+#define INFD    HUGE_VAL
+#define INFL    HUGE_VALL
 #define IQ1     53668
 #define IQ2     52774
 #define IR1     12211
