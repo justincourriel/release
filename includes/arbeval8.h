@@ -43,6 +43,7 @@ ARBEVAL_API void SetInitScript(char *init,int32_t isFile);
 ARBEVAL_API char *ConstructReadObjectAssignmentFromFile(char *fname_s);
 ARBEVAL_API void AddArbevalEnvironment(arbenv *state, arbenv *ae, int32_t overwrite);
 ARBEVAL_API char *ArbevalHistoryToString(arbenv *ae);
+ARBEVAL_API char **ArbevalHistoryElementsToStringVector(arbenv* ae, char io);
 ARBEVAL_API void ClearArbevalHistoryEntry(arbenv *ae, int32_t eind);
 ARBEVAL_API void ClearArbevalHistory(arbenv *ae);
 ARBEVAL_API void WriteArbevalSettingsHeader(FILE *ff, char *hname, double version);
