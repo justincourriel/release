@@ -1337,6 +1337,10 @@ ARB_API uint64_t SubtractBits(uint64_t x, uint64_t y, uint64_t* borrow);
 ARB_API bit_array* AddBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API bit_array* SubtractBitArrays(bit_array* ba1, bit_array* ba2, char* sign);
 ARB_API bit_array* BitStringToBitArray(char* bitstring);
+ARB_API bit_array* AndBitArrays(bit_array* ba1, bit_array* ba2);
+ARB_API bit_array* OrBitArrays(bit_array* ba1, bit_array* ba2);
+ARB_API bit_array* XorBitArrays(bit_array* ba1, bit_array* ba2);
+ARB_API void NegateBitArray(bit_array* ba1);
 
 extern int32_t arb_counter;
 extern int32_t prime_numbers[2048];
