@@ -1364,6 +1364,7 @@ ARB_API bit_array* DecimalStringToBitArray(char* dec);
 ARB_API bit_array *ReduceBitArray(bit_array** ba);
 ARB_API bit_array* CopyBitArray(bit_array* x);
 ARB_API bit_array* MultiplyBitArrays(bit_array* x, bit_array* y);
+ARB_API bit_array* InvertBitArray(bit_array* ba, uintmax_t precision, uintmax_t* kshift);
 ARB_API uint64_t KaratsubaMultiply(uint64_t x, uint64_t y);
 ARB_API uint64_t KaratsubaGetLength(uint64_t value);
 
