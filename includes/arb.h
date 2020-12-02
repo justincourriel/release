@@ -95,7 +95,7 @@ typedef struct MEM_FILE {
 
 typedef struct bit_array {
 
-  uintmax_t nbits, nblocks;
+  uint64_t nbits, nblocks;
   uint64_t* array;
 }bit_array;
 
@@ -1331,22 +1331,22 @@ ARB_API cmplx          *ZeroPadVC(cmplx *,int32_t);
 ARB_API double        **ZeroPad1D(double **,int32_t);
 ARB_API cmplx         **ZeroPad1DC(cmplx **,int32_t);
 
-ARB_API bit_array *InitializeBitArray(uintmax_t size);
+ARB_API bit_array *InitializeBitArray(uint64_t size);
 ARB_API void FreeBitArray(void *bav);
-ARB_API void SetBit(bit_array *ba, uintmax_t pos);
-ARB_API void ClearBit(bit_array *ba, uintmax_t pos);
-ARB_API uint64_t GetBit(bit_array *ba, uintmax_t pos);
+ARB_API void SetBit(bit_array *ba, uint64_t pos);
+ARB_API void ClearBit(bit_array *ba, uint64_t pos);
+ARB_API uint64_t GetBit(bit_array *ba, uint64_t pos);
 ARB_API char *PrintBitArray(bit_array *ba);
 ARB_API void SetAllBits(bit_array *ba);
 ARB_API void SetAllBitsSieve(bit_array* ba);
-ARB_API void SetBitsFromInt64(bit_array *ba, uintmax_t pos, uint64_t num);
-ARB_API uint32_t GetInt32(bit_array *ba, uintmax_t pos);
-ARB_API uint64_t GetInt64(bit_array *ba, uintmax_t pos);
-ARB_API void SetBitsFromChar(bit_array *ba, uintmax_t pos, char c);
+ARB_API void SetBitsFromInt64(bit_array *ba, uint64_t pos, uint64_t num);
+ARB_API uint32_t GetInt32(bit_array *ba, uint64_t pos);
+ARB_API uint64_t GetInt64(bit_array *ba, uint64_t pos);
+ARB_API void SetBitsFromChar(bit_array *ba, uint64_t pos, char c);
 ARB_API void ClearAllBits(bit_array *ba);
-ARB_API void ShiftBitsLeft(bit_array* ba, uintmax_t n);
-ARB_API void ShiftBitsLeftAndResize(bit_array* ba, uintmax_t n);
-ARB_API void ShiftBitsRight(bit_array* ba, uintmax_t n);
+ARB_API void ShiftBitsLeft(bit_array* ba, uint64_t n);
+ARB_API void ShiftBitsLeftAndResize(bit_array* ba, uint64_t n);
+ARB_API void ShiftBitsRight(bit_array* ba, uint64_t n);
 ARB_API uint64_t AddBits(uint64_t x, uint64_t y, uint64_t *carry);
 ARB_API uint64_t SubtractBits(uint64_t x, uint64_t y, uint64_t* borrow);
 ARB_API bit_array* AddBitArrays(bit_array* ba1, bit_array* ba2);
@@ -1362,9 +1362,11 @@ ARB_API char* BitArrayToDecimalString(bit_array* ba);
 ARB_API char* DivideBy2(char* dec);
 ARB_API bit_array* DecimalStringToBitArray(char* dec);
 ARB_API bit_array *ReduceBitArray(bit_array** ba);
+ARB_API void CleanBitArray(bit_array* ba);
 ARB_API bit_array* CopyBitArray(bit_array* x);
+ARB_API char TestEqualBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API bit_array* MultiplyBitArrays(bit_array* x, bit_array* y);
-ARB_API bit_array* InvertBitArray(bit_array* ba, uintmax_t precision, uintmax_t* kshift);
+ARB_API bit_array* InvertBitArray(bit_array* ba, uint64_t precision, uint64_t* kshift);
 ARB_API uint64_t KaratsubaMultiply(uint64_t x, uint64_t y);
 ARB_API uint64_t KaratsubaGetLength(uint64_t value);
 
