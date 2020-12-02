@@ -83,21 +83,21 @@ Zabcdefghijklmnopqrstuvwxyz"
 typedef enum { memory_stream, file_stream }stream_type;
 typedef struct cmplx cmplx;
 
-//typedef struct MEM_FILE MEM_FILE;
-//typedef struct bit_array bit_array;
+typedef struct MEM_FILE MEM_FILE;
+typedef struct bit_array bit_array;
 
-typedef struct MEM_FILE {
-
-  unsigned char* buf;
-  uint32_t buf_size;
-  unsigned char* buf_pos;
-}MEM_FILE;
-
-typedef struct bit_array {
-
-  uint64_t nbits, nblocks;
-  uint64_t* array;
-}bit_array;
+//typedef struct MEM_FILE {
+//
+//  unsigned char* buf;
+//  uint32_t buf_size;
+//  unsigned char* buf_pos;
+//}MEM_FILE;
+//
+//typedef struct bit_array {
+//
+//  uint64_t nbits, nblocks;
+//  uint64_t* array;
+//}bit_array;
 
 typedef struct cmplx {
 
