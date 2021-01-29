@@ -1377,6 +1377,7 @@ ARB_API bit_array* CopyBitArray(bit_array* x);
 ARB_API char TestEqualBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API bit_array* MultiplyBitArrays(bit_array* x, bit_array* y);
 ARB_API bit_array* InvertBitArray(bit_array* ba, uint64_t precision, uint64_t* kshift);
+ARB_API bit_array* ConcatenateBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API bit_array_float *DivideBitArrays(bit_array* ba1, bit_array* ba2, uint64_t precision);
 ARB_API uint64_t KaratsubaMultiply(uint64_t x, uint64_t y);
 ARB_API uint64_t KaratsubaGetLength(uint64_t value);
