@@ -89,7 +89,7 @@ typedef struct bit_array_float {
 
   bit_array *int_part;
   bit_array *dec_part;
-  int8_t sgn;
+  char sgn;
 
 }bit_array_float;
 
@@ -1357,7 +1357,7 @@ ARB_API void ShiftBitsRight(bit_array* ba, uint64_t n);
 ARB_API uint64_t AddBits(uint64_t x, uint64_t y, uint64_t *carry);
 ARB_API uint64_t SubtractBits(uint64_t x, uint64_t y, uint64_t* borrow);
 ARB_API bit_array* AddBitArrays(bit_array* ba1, bit_array* ba2);
-ARB_API bit_array* SubtractBitArrays(bit_array* ba1, bit_array* ba2, int8_t * sign);
+ARB_API bit_array* SubtractBitArrays(bit_array* ba1, bit_array* ba2, char * sign);
 ARB_API bit_array* BitStringToBitArray(char* bitstring);
 ARB_API bit_array* AndBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API bit_array* OrBitArrays(bit_array* ba1, bit_array* ba2);
@@ -1381,7 +1381,7 @@ ARB_API bit_array* InvertBitArray(bit_array* ba, uint64_t precision, uint64_t* k
 ARB_API bit_array* ConcatenateBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API void FreeBitArrayFloat(void* bafv);
 ARB_API char* PrintBitArrayFloat(bit_array_float* baf);
-ARB_API bit_array_float* InitializeBitArrayFloatFromBitArrays(bit_array* intg, bit_array* dec, int8_t sgn);
+ARB_API bit_array_float* InitializeBitArrayFloatFromBitArrays(bit_array* intg, bit_array* dec, char sgn);
 ARB_API bit_array_float *DivideBitArrays(bit_array* ba1, bit_array* ba2, uint64_t precision);
 ARB_API bit_array* LowerBits(bit_array* ba, uint64_t nbits);
 ARB_API bit_array_float* AddBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
