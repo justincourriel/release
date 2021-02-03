@@ -1378,6 +1378,7 @@ ARB_API bit_array* CopyBitArray(bit_array* x);
 ARB_API char TestEqualBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API bit_array* MultiplyBitArrays(bit_array* x, bit_array* y);
 ARB_API bit_array* InvertBitArray(bit_array* ba, uint64_t precision, uint64_t* kshift);
+ARB_API void TrimLowerZeroBits(bit_array* ba);
 ARB_API bit_array* ConcatenateBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API void FreeBitArrayFloat(void* bafv);
 ARB_API char* PrintBitArrayFloat(bit_array_float* baf);
