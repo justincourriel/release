@@ -1387,6 +1387,7 @@ ARB_API bit_array_float *DivideBitArrays(bit_array* ba1, bit_array* ba2, uint64_
 ARB_API bit_array* LowerBits(bit_array* ba, uint64_t nbits);
 ARB_API bit_array_float* AddBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
 ARB_API bit_array_float* SubtractBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
+ARB_API bit_array_float* MultiplyBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
 ARB_API bit_array* HigherBits(bit_array* ba, uint64_t nbits);
 ARB_API uint64_t KaratsubaMultiply(uint64_t x, uint64_t y);
 ARB_API uint64_t KaratsubaGetLength(uint64_t value);
