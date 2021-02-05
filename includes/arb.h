@@ -85,6 +85,13 @@ typedef struct cmplx cmplx;
 
 typedef struct MEM_FILE MEM_FILE;
 typedef struct bit_array bit_array;
+typedef struct bit_array_float {
+
+  bit_array *int_part;
+  bit_array *dec_part;
+  char sgn;
+
+}bit_array_float;
 
 //typedef struct MEM_FILE {
 //
@@ -1350,7 +1357,7 @@ ARB_API void ShiftBitsRight(bit_array* ba, uint64_t n);
 ARB_API uint64_t AddBits(uint64_t x, uint64_t y, uint64_t *carry);
 ARB_API uint64_t SubtractBits(uint64_t x, uint64_t y, uint64_t* borrow);
 ARB_API bit_array* AddBitArrays(bit_array* ba1, bit_array* ba2);
-ARB_API bit_array* SubtractBitArrays(bit_array* ba1, bit_array* ba2, char* sign);
+ARB_API bit_array* SubtractBitArrays(bit_array* ba1, bit_array* ba2, char * sign);
 ARB_API bit_array* BitStringToBitArray(char* bitstring);
 ARB_API bit_array* AndBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API bit_array* OrBitArrays(bit_array* ba1, bit_array* ba2);
@@ -1358,15 +1365,34 @@ ARB_API bit_array* XorBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API void NegateBitArray(bit_array* ba1);
 ARB_API char TestZeroBitArray(bit_array* ba);
 ARB_API bit_array* DivideBitArrayBy10(bit_array* ba, uint8_t* remainder);
-ARB_API char* BitArrayToDecimalString(bit_array* ba);
+ARB_API bit_array* MultiplyBitArrayBy10(bit_array* ba, uint8_t* int_part);
+ARB_API char* BitArrayToBase10DecimalString(bit_array* ba);
+ARB_API char* BitArrayToBase10IntegerString(bit_array* ba);
 ARB_API char* DivideBy2(char* dec);
-ARB_API bit_array* DecimalStringToBitArray(char* dec);
+ARB_API char* MultiplyBy2(char* dec);
+ARB_API bit_array* Base10IntegerStringToBitArray(char* dec);
+ARB_API bit_array* Base10DecimalStringToBitArray(char* dec, uint64_t max_precision);
 ARB_API bit_array *ReduceBitArray(bit_array** ba);
 ARB_API void CleanBitArray(bit_array* ba);
 ARB_API bit_array* CopyBitArray(bit_array* x);
 ARB_API char TestEqualBitArrays(bit_array* ba1, bit_array* ba2);
 ARB_API bit_array* MultiplyBitArrays(bit_array* x, bit_array* y);
 ARB_API bit_array* InvertBitArray(bit_array* ba, uint64_t precision, uint64_t* kshift);
+ARB_API void TrimLowerZeroBits(bit_array* ba);
+ARB_API bit_array* ConcatenateBitArrays(bit_array* ba1, bit_array* ba2);
+ARB_API void FreeBitArrayFloat(void* bafv);
+ARB_API char* PrintBitArrayFloat(bit_array_float* baf);
+ARB_API bit_array_float* InitializeBitArrayFloatFromBitArrays(bit_array* intg, bit_array* dec, char sgn);
+ARB_API bit_array_float *DivideBitArrays(bit_array* ba1, bit_array* ba2, uint64_t precision);
+ARB_API bit_array* LowerBits(bit_array* ba, uint64_t nbits);
+ARB_API bit_array_float* AddBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
+ARB_API bit_array_float* SubtractBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
+ARB_API bit_array_float* MultiplyBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
+ARB_API void AddLeadingZeroBits(bit_array* ba, uint64_t nzeros);
+ARB_API void AddTrailingZeroBits(bit_array* ba, uint64_t nzeros);
+ARB_API uint64_t GetLeadingZeroBits(bit_array* ba);
+ARB_API bit_array_float* DivideBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2, uint64_t precision);
+ARB_API bit_array* HigherBits(bit_array* ba, uint64_t nbits);
 ARB_API uint64_t KaratsubaMultiply(uint64_t x, uint64_t y);
 ARB_API uint64_t KaratsubaGetLength(uint64_t value);
 
