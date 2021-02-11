@@ -17,8 +17,7 @@
 #include   <dirent_win.h>
 #endif
 
-#include <inttypes.h>
-#include <stdint.h>
+#include <bit_array.h>
 #include <stdio.h>
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -84,27 +83,6 @@ typedef enum { memory_stream, file_stream }stream_type;
 typedef struct cmplx cmplx;
 
 typedef struct MEM_FILE MEM_FILE;
-typedef struct bit_array bit_array;
-typedef struct bit_array_float {
-
-  bit_array *int_part;
-  bit_array *dec_part;
-  char sgn;
-
-}bit_array_float;
-
-//typedef struct MEM_FILE {
-//
-//  unsigned char* buf;
-//  uint32_t buf_size;
-//  unsigned char* buf_pos;
-//}MEM_FILE;
-//
-//typedef struct bit_array {
-//
-//  uint64_t nbits, nblocks;
-//  uint64_t* array;
-//}bit_array;
 
 typedef struct cmplx {
 
@@ -247,12 +225,10 @@ ARB_API cmplx           ComplexP(double,double);
 ARB_API cmplx           ComplexR(double,double);
 ARB_API cmplx          *ComplexRoots(cmplx,int32_t);
 ARB_API char          **ComplexString(cmplx,int32_t);
-ARB_API char           *Concat(char *, char *);
 ARB_API char           *ConcatFilenameL(char *,char *);
 ARB_API char           *ConcatFilenameR(char *,char *);
 ARB_API char           *ConcatN(char **);
 ARB_API char          **ConcatStringVector(char **,char **);
-ARB_API char           *Concat3(char *,char *,char *);
 ARB_API char           *Concat4(char *,char *,char *,char *);
 ARB_API char           *Concat5(char *,char *,char *,char *,char *);
 ARB_API cmplx           ConjC(cmplx);
@@ -263,7 +239,7 @@ ARB_API cmplx        ***ConvertMVVMC(cmplx ***,int32_t);
 ARB_API double       ***ConvertVMMV(double ***);
 ARB_API cmplx        ***ConvertVMMVC(cmplx ***);
 ARB_API double        **ConvolutionC(double (*)(double),double (*)(double),double,
-                             double,int32_t,double,double,int32_t);
+                                     double,int32_t,double,double,int32_t);
 ARB_API double        **ConvolutionD(double **,double **);
 ARB_API cmplx         **ConvolutionFFT(cmplx **,cmplx **);
 ARB_API cmplx          *ConvolutionFFTV(cmplx *,cmplx *);
@@ -600,7 +576,6 @@ ARB_API void            IncM(double **,double **);
 ARB_API void            IncV(double *,double *);
 ARB_API double          InnerP(double *,double *);
 ARB_API cmplx           InnerPC(cmplx *,cmplx *);
-ARB_API char           *InsertChar(char,char **,int32_t);
 ARB_API void            InsertCol(double *,double ***,int32_t);
 ARB_API void            InsertColC(cmplx *,cmplx ***,int32_t);
 ARB_API void            InsertElement(double,double **,int32_t);
@@ -1237,7 +1212,6 @@ ARB_API cmplx         **TriDiagonalMatrixC(cmplx *,cmplx *,cmplx *);
 ARB_API void            TriDiagSolve(double *,double *,double *,double *,double *);
 ARB_API void            TriDiagSolveC(cmplx *,cmplx *,cmplx *,cmplx *,cmplx *);
 ARB_API uint64_t        UInt64FromString(char *);
-ARB_API char           *UInt64String(uint64_t);
 ARB_API uint32_t        UnicodeBytesToInteger(unsigned char *);
 ARB_API void            UniformScale(double **);
 ARB_API double        **UnionM(double **,double **,char *);
@@ -1338,79 +1312,8 @@ ARB_API cmplx          *ZeroPadVC(cmplx *,int32_t);
 ARB_API double        **ZeroPad1D(double **,int32_t);
 ARB_API cmplx         **ZeroPad1DC(cmplx **,int32_t);
 
-ARB_API bit_array *InitializeBitArray(uint64_t size);
-ARB_API void FreeBitArray(void *bav);
-ARB_API void SetBit(bit_array *ba, uint64_t pos);
-ARB_API void ClearBit(bit_array *ba, uint64_t pos);
-ARB_API uint64_t GetBit(bit_array *ba, uint64_t pos);
-ARB_API char *PrintBitArray(bit_array *ba);
-ARB_API void SetAllBits(bit_array *ba);
-ARB_API void SetAllBitsSieve(bit_array* ba);
-ARB_API void SetBitsFromInt64(bit_array *ba, uint64_t pos, uint64_t num);
-ARB_API uint32_t GetInt32(bit_array *ba, uint64_t pos);
-ARB_API uint64_t GetInt64(bit_array *ba, uint64_t pos);
-ARB_API void SetBitsFromChar(bit_array *ba, uint64_t pos, char c);
-ARB_API void ClearAllBits(bit_array *ba);
-ARB_API void ShiftBitsLeft(bit_array* ba, uint64_t n);
-ARB_API void ShiftBitsLeftAndResize(bit_array* ba, uint64_t n);
-ARB_API void ShiftBitsRight(bit_array* ba, uint64_t n);
-ARB_API uint64_t AddBits(uint64_t x, uint64_t y, uint64_t *carry);
-ARB_API uint64_t SubtractBits(uint64_t x, uint64_t y, uint64_t* borrow);
-ARB_API bit_array* AddBitArrays(bit_array* ba1, bit_array* ba2);
-ARB_API char TestUnitBitArray(bit_array* ba);
-ARB_API bit_array* SubtractBitArrays(bit_array* ba1, bit_array* ba2, char * sign);
-ARB_API bit_array* BitStringToBitArray(char* bitstring);
-ARB_API bit_array* AndBitArrays(bit_array* ba1, bit_array* ba2);
-ARB_API bit_array* OrBitArrays(bit_array* ba1, bit_array* ba2);
-ARB_API bit_array* XorBitArrays(bit_array* ba1, bit_array* ba2);
-ARB_API void NegateBitArray(bit_array* ba1);
-ARB_API char TestZeroBitArray(bit_array* ba);
-ARB_API uint64_t DivideUint64By10(uint64_t n);
-ARB_API bit_array* IntDivideBitArrayBy10(bit_array* ba1);
-ARB_API bit_array* DivideBitArrayBy10(bit_array* ba, uint8_t* remainder);
-ARB_API bit_array* DivideBitArrayByPowerOf10(bit_array* ba, uint64_t pow10);
-ARB_API bit_array* MultiplyBitArrayBy10(bit_array* ba, uint8_t* int_part);
-ARB_API char* BitArrayToBase10DecimalString(bit_array* ba);
-ARB_API char* BitArrayToBase10IntegerStringRecursive(bit_array* ba);
-ARB_API bit_array** GetPowerOf10BitArrays(uint64_t powmax);
-//ARB_API uint64_t DivideBy10(uint64_t n);
-ARB_API char* BitArrayToBase10IntegerString(bit_array* ba);
-ARB_API char* DivideBy2(char* dec);
-ARB_API char* MultiplyBy2(char* dec);
-ARB_API bit_array* Base10IntegerStringToBitArray(char* dec);
-ARB_API bit_array* Base10DecimalStringToBitArray(char* dec, uint64_t max_precision);
-ARB_API bit_array *ReduceBitArray(bit_array** ba);
-ARB_API void CleanBitArray(bit_array* ba);
-ARB_API bit_array* CopyBitArray(bit_array* x);
-ARB_API char TestEqualBitArrays(bit_array* ba1, bit_array* ba2);
-ARB_API bit_array* MultiplyBitArrays(bit_array* x, bit_array* y);
-ARB_API bit_array* InvertBitArray(bit_array* ba, uint64_t precision, uint64_t* kshift);
-ARB_API uint64_t TrimLowerZeroBits(bit_array* ba);
-ARB_API bit_array* ConcatenateBitArrays(bit_array* ba1, bit_array* ba2);
-ARB_API void FreeBitArrayFloat(void* bafv);
-ARB_API char* PrintBitArrayFloat(bit_array_float* baf);
-ARB_API bit_array_float* InitializeBitArrayFloatFromBitArrays(bit_array* intg, bit_array* dec, char sgn);
-ARB_API bit_array_float *DivideBitArrays(bit_array* ba1, bit_array* ba2, uint64_t precision);
-ARB_API bit_array* LowerBits(bit_array* ba, uint64_t nbits);
-ARB_API bit_array_float* AddBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
-ARB_API bit_array_float* SubtractBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
-ARB_API bit_array_float* MultiplyBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2);
-ARB_API void AddLeadingZeroBits(bit_array* ba, uint64_t nzeros);
-ARB_API void AddTrailingZeroBits(bit_array* ba, uint64_t nzeros);
-ARB_API uint64_t CountLeadingZeroBits(uint64_t x);
-ARB_API uint64_t GetLeadingZeroBits(bit_array* ba);
-ARB_API bit_array_float* DivideBitArrayFloats(bit_array_float* baf1, bit_array_float* baf2, uint64_t precision);
-ARB_API bit_array* HigherBits(bit_array* ba, uint64_t nbits);
-ARB_API uint64_t KaratsubaMultiply(uint64_t x, uint64_t y);
-ARB_API uint64_t KaratsubaGetLength(uint64_t value);
-ARB_API bit_array* BitArrayFactorial(bit_array* ba);
-ARB_API bit_array* ExponentiateBitArrays(bit_array* ba1, bit_array* ba2);
-
 extern int32_t arb_counter;
 extern int32_t prime_numbers[2048];
-extern size_t max_size_t;
-extern uint64_t one_bit_array64_h;
-extern uint32_t one_bit_array32_h;
 
 
 #endif // ARB_H
