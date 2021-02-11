@@ -45,7 +45,6 @@ BIT_ARRAY_API void FreeBitArray(void *bav);
 BIT_ARRAY_API void SetBit(bit_array *ba, uint64_t pos);
 BIT_ARRAY_API void ClearBit(bit_array *ba, uint64_t pos);
 BIT_ARRAY_API uint64_t GetBit(bit_array *ba, uint64_t pos);
-BIT_ARRAY_API char *PrintBitArray(bit_array *ba);
 BIT_ARRAY_API void SetAllBits(bit_array *ba);
 BIT_ARRAY_API void SetAllBitsSieve(bit_array* ba);
 BIT_ARRAY_API void SetBitsFromInt64(bit_array *ba, uint64_t pos, uint64_t num);
@@ -89,7 +88,6 @@ BIT_ARRAY_API bit_array* InvertBitArray(bit_array* ba, uint64_t precision, uint6
 BIT_ARRAY_API uint64_t TrimLowerZeroBits(bit_array* ba);
 BIT_ARRAY_API bit_array* ConcatenateBitArrays(bit_array* ba1, bit_array* ba2);
 BIT_ARRAY_API void FreeBitArrayFloat(void* bafv);
-BIT_ARRAY_API char* PrintBitArrayFloat(bit_array_float* baf);
 BIT_ARRAY_API bit_array_float* InitializeBitArrayFloatFromBitArrays(bit_array* intg, bit_array* dec, char sgn);
 BIT_ARRAY_API bit_array_float *DivideBitArrays(bit_array* ba1, bit_array* ba2, uint64_t precision);
 BIT_ARRAY_API bit_array* LowerBits(bit_array* ba, uint64_t nbits);
@@ -106,10 +104,6 @@ BIT_ARRAY_API uint64_t KaratsubaMultiply(uint64_t x, uint64_t y);
 BIT_ARRAY_API uint64_t KaratsubaGetLength(uint64_t value);
 BIT_ARRAY_API bit_array* BitArrayFactorial(bit_array* ba);
 BIT_ARRAY_API bit_array* ExponentiateBitArrays(bit_array* ba1, bit_array* ba2);
-BIT_ARRAY_API char* UInt64String(uint64_t); 
-BIT_ARRAY_API char* Concat(char*, char*);
-BIT_ARRAY_API char* Concat3(char*, char*, char*);
-BIT_ARRAY_API char* InsertChar(char, char**, int32_t);
 
 extern size_t max_size_t;
 extern uint64_t one_bit_array64_h;
