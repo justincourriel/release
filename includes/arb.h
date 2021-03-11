@@ -1069,6 +1069,7 @@ ARB_API int32_t         SeedFromStringP(char *);
 ARB_API char           *SHA256(char *);
 ARB_API char           *SHA512(char *);
 ARB_API char           *SHA512Base64(char *, char *, char);
+ARB_API char           *SHA512FromByteArray(unsigned char*, uint64_t);
 ARB_API void            Shift(double *,int32_t);
 ARB_API void            ShiftC(cmplx *,int32_t);
 ARB_API void            ShiftCol(double **,int32_t);
